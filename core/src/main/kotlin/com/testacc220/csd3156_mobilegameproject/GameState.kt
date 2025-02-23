@@ -9,7 +9,7 @@ class GameState {
     private val gameBoard = GameBoard()
     private val gameObjects = GameObjects()
     private var isProcessingMerges  = false
-
+    private var MAX_ANGLE = 45f;
     enum class Orientation {
         VERTICAL,
         HORIZONTAL
@@ -53,9 +53,10 @@ class GameState {
     }
 
     private fun applyGravity(gem: Gem, deltaTime: Float) {
-        val angleDegrees = SensorManager.rotation
+        var angleDegrees = SensorManager.rotation
         // Gdx.app.log("applyGravity", "angleDegrees: $angleDegrees")
-
+        if( angleDegrees > MAX_ANGLE )
+            angleDegrees = MAX_ANGLE
         val angleRadians = Math.toRadians(angleDegrees.toDouble()).toFloat()
 
         val dx = GRAVITY * kotlin.math.sin(angleRadians) * deltaTime
